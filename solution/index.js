@@ -35,6 +35,8 @@ function guessNum() {
 
     document.getElementById('testNum').innerHTML = 'Test Number : ' + counter;
     counter +=1;
+
+    document.getElementById('number').value = "";
 }
 
 
@@ -72,4 +74,15 @@ function playSound() {
 
 function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+//? press enter option 
+//? after checking, click is ready into input
+
+window.addEventListener("keydown", keydownHandler, false);
+
+function keydownHandler(event) {
+  if (event.keyCode === 13) {
+    guessNum();
+  }
 }
