@@ -1,28 +1,28 @@
 document.getElementById("btn").addEventListener("click", guessNum)
 
 let num = randomInteger(0,100);
-let counter = 1;
+let counter = 0;
 
 function guessNum() {
     let guess = document.getElementById("number").value;
+    let message = document.getElementById('message');
 
     if (guess.length == 0) {
-        document.getElementById("message").innerHTML = "Please input a value";
-        playSound()
-        return
+        message.innerText = "Please input a value";
     } else if (isNaN(guess)) {
-        document.getElementById("message").innerHTML = 'Enter a number, please!'
-        playSound()
+        message.innerText = 'Enter a number, please!'
     } else if (guess < num) {
-        document.getElementById("message").innerHTML = 'Guess higher!'
+        message.innerText = 'Guess higher!'
+        counter +=1;
         playSound()
     } else if (guess > num) {
-        document.getElementById('message').innerHTML = 'Guess lower!';
+        message.innerText = 'Guess lower!';
+        counter +=1;
         playSound()
     } else {
         
         playSoundSuccess()
-        
+        counter +=1;
         alert(`Congrats! You guessed the number on the ${counter}. try.`)
         
         if (confirm('You wanna play again?')) {
@@ -33,8 +33,9 @@ function guessNum() {
         }
     }    
 
+    document.getElementById("number").focus();
+    
     document.getElementById('testNum').innerHTML = 'Test Number : ' + counter;
-    counter +=1;
 
     document.getElementById('number').value = "";
 }
@@ -77,12 +78,9 @@ function randomInteger(min, max) {
 }
 
 //? press enter option 
-//? after checking, click is ready into input
 
-window.addEventListener("keydown", keydownHandler, false);
-
-function keydownHandler(event) {
-  if (event.keyCode === 13) {
-    guessNum();
-  }
-}
+document.querySelector('#number').addEventListener('keyup', function(event) {
+    if (event.keyCode === 13) {
+        guessNum()
+    }
+}) 
